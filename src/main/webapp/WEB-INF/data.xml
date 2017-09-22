@@ -1,0 +1,50 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="ua.training.bookshop.model"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+            </props>
+        </property>
+    </bean>
+
+
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+          p:driverClassName="${ds.database-driver}"
+          p:url="${ds.url}"
+          p:username="${ds.username}"
+          p:password="${ds.password}"/>
+
+
+
+    <bean id="bookDao" class="ua.training.bookshop.dao.BookDaoImpl"/>
+
+    <bean id="accountDao" class="ua.training.bookshop.dao.AccountDaoImpl"/>
+
+    <bean id="roleDao" class="ua.training.bookshop.dao.RoleDaoImpl"/>
+
+    <bean id="orderDao" class="ua.training.bookshop.dao.OrdersDaoImpl"/>
+
+    <bean id="bookValidator" class="ua.training.bookshop.validator.BookValidator"/>
+
+</beans>
