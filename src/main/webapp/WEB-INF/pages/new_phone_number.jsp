@@ -6,13 +6,8 @@
 
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>New phone number</title>
+    <title><spring:message code="new_phone_number.title"/> </title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/bootstrap.css" rel="stylesheet">
@@ -20,25 +15,30 @@
 <body>
 <jsp:include page="_header.jsp"/>
 <div class="container">
-    <h3 style="margin-top: 10px">New phone number</h3>
+    <h3 style="margin-top: 10px"><spring:message code="new_phone_number.title"/> </h3>
     <form action="<c:url value="/home/new_phone_number"/> " method="POST">
-        <c:if test="${error != null}">
+        <c:if test="${wrongFormat != null}">
             <div class="alert alert-danger" role="alert">
-                <strong>Oh snap!</strong> ${error}
+                <spring:message code="new_phone_number.error.format"/>
+            </div>
+        </c:if>
+        <c:if test="${noMatches != null}">
+            <div class="alert alert-danger" role="alert">
+                <spring:message code="new_phone_number.error.no_matches"/>
             </div>
         </c:if>
         <div class="form-group">
-            <label for="inputNewPhoneNumber">New phone number</label>
+            <label for="inputNewPhoneNumber"><spring:message code="new_phone_number.title"/> </label>
             <input type="text" name="newPhoneNumber" class="form-control" id="inputNewPhoneNumber"
-                   placeholder="+380935215824" autofocus="autofocus">
+                   placeholder="<spring:message code="new_phone_number.placeholder"/> " autofocus="autofocus">
         </div>
         <div class="form-group">
-            <label for="inputConfirmNewPhoneNumber">Confirm new phone number</label>
+            <label for="inputConfirmNewPhoneNumber"><spring:message code="new_phone_number.confirm_phone_number"/> </label>
             <input type="text" name="confirmNewPhoneNumber" class="form-control" id="inputConfirmNewPhoneNumber"
-                   placeholder="+380935215824">
+                   placeholder="<spring:message code="new_phone_number.placeholder"/> ">
         </div>
-        <button type="submit" class="btn btn-success">Change phone number</button>
-        <a href="${contextPath}/home" role="button" class="btn btn-info">Back</a>
+        <button type="submit" class="btn btn-success"><spring:message code="new_phone_number.button.change"/> </button>
+        <a href="${contextPath}/home" role="button" class="btn btn-info"><spring:message code="new_phone_number.button.back"/> </a>
         <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
     </form>
 </div>

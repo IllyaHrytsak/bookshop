@@ -73,9 +73,14 @@ public class OrderController {
 
     @RequestMapping(value = "/shopping_cart/amount")
     public String updateQuantity(HttpServletRequest request,
-                                 @RequestParam(value = "orderId", defaultValue = "1") String orderId) {
+                                 @RequestParam(value = "orderId", defaultValue = "") String orderId) {
         String newAmount = request.getParameter("newAmount");
-        ordersService.updateOrder(Integer.parseInt(orderId), Integer.parseInt(newAmount));
+        if (Integer.parseInt(newAmount) < 1|| Integer.parseInt(newAmount) > 10) {
+            return "redirect:/shopping_cart?wrongAmount";
+        }
+        if (!orderId.isEmpty()) {
+            ordersService.updateOrder(Integer.parseInt(orderId), Integer.parseInt(newAmount));
+        }
         return "redirect:/shopping_cart";
     }
 
@@ -84,6 +89,23 @@ public class OrderController {
     @RequestMapping(value = "/success")
     public String success() {
         return "success";
+    }
+
+    @RequestMapping(value = "/all_orders")
+    public String allOrders(Model model,
+                            @RequestParam(value = "accountEmail", defaultValue = "") String accountEmail,
+                            String error) {
+        model.addAttribute(accountService.listAccountsWithOrders());
+        if (!accountEmail.isEmpty()) {
+            Account account = accountService.findByEmail(accountEmail);
+            model.addAttribute("accountDetails", account);
+            model.addAttribute("totalSummary", ordersService.getTotalAmountOrders(account));
+            model.addAttribute("paid", ordersService.isOrdersPaid(account));
+        }
+        if (error != null) {
+            model.addAttribute("message", "");
+        }
+        return "all_orders";
     }
 
     @RequestMapping(value = "/confirm_orders")

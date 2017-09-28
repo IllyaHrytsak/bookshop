@@ -20,9 +20,14 @@
 <jsp:include page="_header.jsp"/>
 <div class="container" style="margin-top: 10px;">
     <c:if test="${not empty orderList}">
-        <c:if test="${message != null}">
+        <c:if test="${noMoney != null}">
             <div class="alert alert-danger" role="alert">
                 <spring:message code="shopping_cart.error.no_money"/>
+            </div>
+        </c:if>
+        <c:if test="${wrongAmount != null}">
+            <div class="alert alert-danger" role="alert">
+                <spring:message code="shopping_cart.error.wrong_amount"/>
             </div>
         </c:if>
         <div class="row">
@@ -30,17 +35,17 @@
                 <div class="card">
                     <form action="${contextPath}/shopping_cart/amount?orderId=${order.orderId}" method="POST">
                         <div class="card-body">
-                            <h4 class="card-title"><strong><spring:message code="shopping_cart.book_name"/>
-                                :</strong> ${order.book.bookTitle}</h4>
-                            <p class="card-text"><strong><spring:message code="shopping_cart.book_author"/>
-                                :</strong> ${order.book.bookAuthor} </p>
+                            <h4 class="card-title"><strong><spring:message code="shopping_cart.book_name"/>:
+                            </strong> ${order.book.bookTitle}</h4>
+                            <p class="card-text"><strong><spring:message code="shopping_cart.book_author"/>:
+                            </strong> ${order.book.bookAuthor} </p>
                             <p class="card-text"><strong><spring:message code="shopping_cart.amount"/> </strong><input
                                     name="newAmount" type="text"
                                     value="${order.amount}"></p>
-                            <p class="card-text"><strong><spring:message code="shopping_cart.book_price"/>
-                                :</strong> ${order.price} $</p>
-                            <p class="card-text"><strong><spring:message code="shopping_cart.total_price"/>
-                                :</strong> ${order.totalPrice} $</p>
+                            <p class="card-text"><strong><spring:message code="shopping_cart.book_price"/>:
+                            </strong> ${order.price} $</p>
+                            <p class="card-text"><strong><spring:message code="shopping_cart.total_price"/>:
+                            </strong> ${order.totalPrice} $</p>
                         </div>
                         <div class="card-footer text-right">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -55,6 +60,60 @@
 
             </c:forEach>
         </div>
+        <nav aria-label="Page navigation" style="margin-top: 20px">
+            <ul class="pagination justify-content-center">
+                <c:url value="${contextPath}/shopping_cart" var="prev">
+                    <c:param name="page" value="${page-1}"/>
+                </c:url>
+                <c:choose>
+                    <c:when test="${page > 1}">
+                        <li class="page-item">
+                            <a class="page-link" href="<c:out value="${prev}"/>" tabindex="-1"><spring:message
+                                    code="pagination.prev"/></a>
+                        </li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="page-item disabled">
+                            <span class="page-link"><spring:message code="pagination.prev"/> </span>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
+                <c:forEach begin="1" end="${maxPages}" step="1" varStatus="i">
+                    <c:choose>
+                        <c:when test="${page == i.index}">
+                            <li class="page-item active">
+                            <span class="page-link">
+                                ${i.index}
+                                <span class="sr-only">(current)</span>
+                            </span>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <c:url value="${contextPath}/shopping_cart" var="url">
+                                <c:param name="page" value="${i.index}"/>
+                            </c:url>
+                            <li class="page-item"><a class="page-link" href='<c:out value="${url}" />'>${i.index}</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+                <c:url value="${contextPath}/shopping_cart" var="next">
+                    <c:param name="page" value="${page+1}"/>
+                </c:url>
+                <c:choose>
+                    <c:when test="${page + 1 <= maxPages}">
+                        <li class="page-item">
+                            <a class="page-link" href="<c:out value="${next}"/>"><spring:message
+                                    code="pagination.next"/></a>
+                        </li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="page-item disabled">
+                            <span class="page-link"><spring:message code="pagination.next"/></span>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
+        </nav>
         <hr>
         <div class="text-right" style="margin-top: 10px;">
             <h3><spring:message code="shopping_cart.total_amount"/> : ${totalAmount} $</h3>

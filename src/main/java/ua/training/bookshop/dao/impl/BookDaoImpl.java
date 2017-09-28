@@ -1,4 +1,4 @@
-package ua.training.bookshop.dao;
+package ua.training.bookshop.dao.impl;
 
 
 import org.hibernate.Session;
@@ -7,13 +7,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import ua.training.bookshop.dao.BookDao;
 import ua.training.bookshop.model.Book;
 
 import java.util.List;
 
 @Repository
 public class BookDaoImpl implements BookDao {
-    private static final Logger logger = LoggerFactory.getLogger(BookDaoImpl.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BookDaoImpl.class);
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -23,14 +25,14 @@ public class BookDaoImpl implements BookDao {
     public void addBook(Book book) {
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(book);
-        logger.info("Book successfully saved. Book details: " + book);
+        LOGGER.info("Book successfully saved. Book details: " + book);
     }
 
     @Override
     public void updateBook(Book book) {
         Session session = this.sessionFactory.getCurrentSession();
         session.update(book);
-        logger.info("Book successfully update. Book details: " + book);
+        LOGGER.info("Book successfully update. Book details: " + book);
     }
 
     @Override
@@ -41,14 +43,14 @@ public class BookDaoImpl implements BookDao {
         if(book != null){
             session.delete(book);
         }
-        logger.info("Book successfully removed. Book details: " + book);
+        LOGGER.info("Book successfully removed. Book details: " + book);
     }
 
     @Override
     public Book getBookById(Integer id) {
         Session session = this.sessionFactory.getCurrentSession();
         Book book = session.load(Book.class, id);
-        logger.info("Book successfully loaded. Book details: " + book);
+        LOGGER.info("Book successfully loaded. Book details: " + book);
 
         return book;
     }
@@ -63,9 +65,11 @@ public class BookDaoImpl implements BookDao {
             return null;
         }
         for (Book book : bookList){
-            logger.info("Book list: " + book);
+            LOGGER.info("Book list: " + book);
         }
 
         return bookList;
     }
+
+
 }

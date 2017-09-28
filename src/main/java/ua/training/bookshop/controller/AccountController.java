@@ -2,6 +2,7 @@ package ua.training.bookshop.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,12 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.training.bookshop.model.Account;
+import ua.training.bookshop.model.Orders;
 import ua.training.bookshop.service.AccountService;
 import ua.training.bookshop.service.OrdersService;
 import ua.training.bookshop.service.SecurityService;
 import ua.training.bookshop.validator.RegisterValidator;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class AccountController {
@@ -114,12 +117,12 @@ public class AccountController {
         String newFirstName = request.getParameter("newFirstName");
         String confirmNewFirstName = request.getParameter("confirmNewFirstName");
         if (newFirstName.length() < 2) {
-            model.addAttribute("error", "First name must be over 2 characters.");
+            model.addAttribute("length", "");
             return "new_first_name";
         }
 
         if (!newFirstName.equals(confirmNewFirstName)) {
-            model.addAttribute("error", "First name doesn't match.");
+            model.addAttribute("noMatches", "");
             return "new_first_name";
         }
         String accountEmail = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -139,12 +142,12 @@ public class AccountController {
         String newLastName = request.getParameter("newLastName");
         String confirmNewLastName = request.getParameter("confirmNewLastName");
         if (newLastName.length() < 2) {
-            model.addAttribute("error", "Last name must be over 2 characters.");
+            model.addAttribute("length", "Last name must be over 2 characters.");
             return "new_last_name";
         }
 
         if (!newLastName.equals(confirmNewLastName)) {
-            model.addAttribute("error", "Last name doesn't match.");
+            model.addAttribute("noMatches", "Last name doesn't match.");
             return "new_last_name";
         }
         String accountEmail = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -165,12 +168,12 @@ public class AccountController {
         String confirmNewPhoneNumber = request.getParameter("confirmNewPhoneNumber");
 
         if (!newPhoneNumber.matches(phoneNumberRegex)) {
-            model.addAttribute("error", "Incorrect format phone number.");
+            model.addAttribute("wrongFormat", "");
             return "new_phone_number";
         }
 
         if (!newPhoneNumber.equals(confirmNewPhoneNumber)) {
-            model.addAttribute("error", "Phone number doesn't match.");
+            model.addAttribute("noMatches", "");
             return "new_phone_number";
         }
 
@@ -194,18 +197,18 @@ public class AccountController {
         String accountEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         Account account = accountService.findByEmail(accountEmail);
         if (!cardNumber.matches(cardNumberRegex)) {
-            model.addAttribute("error", "Incorrect card number.");
+            model.addAttribute("wrongCardNumber", "");
             return "deposit_money";
         }
 
         if (!CVV.matches(cvvRegex)) {
-            model.addAttribute("error", "Incorrect CVV.");
+            model.addAttribute("wrongCVV", "");
             return "deposit_money";
         }
 
         if (money.isEmpty() || Double.parseDouble(money) > 10000
                 || (account.getCard() + Double.parseDouble(money)) > 1000000) {
-            model.addAttribute("error", "Incorrect amount of money.");
+            model.addAttribute("wrongAmount", "");
             return "deposit_money";
         }
         account.setCard(account.getCard() + Double.parseDouble(money));
@@ -214,13 +217,30 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/shopping_cart", method = RequestMethod.GET)
-    public String listOrders(Model model, String noMoney, String repeat) {
+    public String listOrders(@RequestParam(required = false) Integer page,
+                             Model model, String noMoney, String wrongAmount) {
         String accountEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         Account account = accountService.findByEmail(accountEmail);
         if (noMoney != null) {
-            model.addAttribute("message", "");
+            model.addAttribute("noMoney", "");
         }
-        model.addAttribute("orderList", ordersService.getInactiveOrders(account));
+        if (wrongAmount != null) {
+            model.addAttribute("wrongAmount", "");
+        }
+        List<Orders> ordersList = ordersService.getInactiveOrders(account);
+        PagedListHolder<Orders> pagedListHolder = new PagedListHolder<>(ordersList);
+        pagedListHolder.setPageSize(3);
+        model.addAttribute("maxPages", pagedListHolder.getPageCount());
+        if(page==null || page < 1 || page > pagedListHolder.getPageCount())page=1;
+        model.addAttribute("page", page);
+        if(page < 1 || page > pagedListHolder.getPageCount()){
+            pagedListHolder.setPage(0);
+            model.addAttribute("orderList", pagedListHolder.getPageList());
+        }
+        else if(page <= pagedListHolder.getPageCount()) {
+            pagedListHolder.setPage(page-1);
+            model.addAttribute("orderList", pagedListHolder.getPageList());
+        }
         model.addAttribute("totalAmount", ordersService.getTotalAmountInactiveOrders(account));
         return "shopping_cart";
     }

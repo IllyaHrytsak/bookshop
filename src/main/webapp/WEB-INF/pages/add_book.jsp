@@ -10,7 +10,7 @@
 <head>
 
 
-    <title><spring:message code="add_book.title"/> </title>
+    <title><spring:message code="add_book.title"/></title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/bootstrap.css" rel="stylesheet">
@@ -22,7 +22,7 @@
 
     <c:url value="${contextPath}/add_book" var="addBook"/>
 
-    <h4 style="margin-top: 10px"><spring:message code="add_book.title"/> </h4>
+    <h4 style="margin-top: 10px"><spring:message code="add_book.title"/></h4>
     <form:form action="${addBook}" commandName="book">
         <table class="table">
             <tr>
@@ -80,8 +80,7 @@
             </tr>
         </table>
     </form:form>
-
-</div>
+</div
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 </html>

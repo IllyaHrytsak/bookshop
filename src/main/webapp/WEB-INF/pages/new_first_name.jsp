@@ -6,13 +6,8 @@
 
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>New first name</title>
+    <title><spring:message code="new_first_name.title"/></title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/bootstrap.css" rel="stylesheet">
@@ -20,25 +15,32 @@
 <body>
 <jsp:include page="_header.jsp"/>
 <div class="container">
-    <h3 style="margin-top: 10px">New first name</h3>
+    <h3 style="margin-top: 10px"><spring:message code="new_first_name.title"/></h3>
     <form action="<c:url value="${contextPath}/home/new_first_name"/> " method="POST">
-        <c:if test="${error != null}">
+        <c:if test="${length != null}">
             <div class="alert alert-danger" role="alert">
-                <strong>Oh snap!</strong> ${error}
+                <spring:message code="new_first_name.error.length"/>
+            </div>
+        </c:if>
+        <c:if test="${noMatches != null}">
+            <div class="alert alert-danger" role="alert">
+                <spring:message code="new_first_name.error.no_matches"/>
             </div>
         </c:if>
         <div class="form-group">
-            <label for="inputNewFirstName">New first name</label>
+            <label for="inputNewFirstName"><spring:message code="new_first_name.title"/> </label>
             <input type="text" name="newFirstName" class="form-control" id="inputNewFirstName"
-                   placeholder="Illya" autofocus="autofocus">
+                   placeholder="<spring:message code="new_first_name.placeholder"/> " autofocus="autofocus">
         </div>
         <div class="form-group">
-            <label for="inputConfirmNewFirstName">Confirm new first name</label>
-            <input type="text" name="confirmNewFirstName" class="form-control" id="inputConfirmNewFirstName" placeholder="Illya">
+            <label for="inputConfirmNewFirstName"><spring:message code="new_first_name.confirm_first_name"/> </label>
+            <input type="text" name="confirmNewFirstName" class="form-control" id="inputConfirmNewFirstName"
+                   placeholder="<spring:message code="new_first_name.placeholder"/> ">
         </div>
-        <button type="submit" class="btn btn-success">Change first name</button>
-        <a href="${contextPath}/home" role="button" class="btn btn-info">Back</a>
-        <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
+        <button type="submit" class="btn btn-success"><spring:message code="new_first_name.button.change"/></button>
+        <a href="${contextPath}/home" role="button" class="btn btn-info"><spring:message
+                code="new_first_name.button.back"/> </a>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form>
 </div>
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>

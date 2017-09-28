@@ -16,7 +16,7 @@
 <body>
 <jsp:include page="_header.jsp"/>
 <div class="container">
-    Language : <a href="?lang=en">English</a> | <a href="?lang=uk">Ukrainian</a>
+
     <h2 style="margin-top: 10px"><spring:message code="home.account_info"/></h2>
     <table class="table table-bordered">
         <tr>

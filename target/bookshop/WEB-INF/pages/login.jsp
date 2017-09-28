@@ -21,8 +21,6 @@
 <jsp:include page="_header.jsp"/>
 <div class="container">
 
-    Language : <a href="?lang=en">English</a> | <a href="?lang=uk">Ukrainian</a>
-
     <form method="POST" action="${contextPath}/login">
         <div class="form-group" style="margin-top: 10px;">
             <label for="inputEmail"><spring:message code="login.label.email"/> </label>
@@ -52,7 +50,6 @@
                     code="login.button.signup"/> </a>
         </div>
     </form>
-
 
 </div>
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>

@@ -16,4 +16,5 @@ public interface BookDao {
     Book getBookById(Integer id);
 
     List<Book> listBooks();
+
 }

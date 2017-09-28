@@ -51,9 +51,63 @@
             </div>
 
         </c:forEach>
-    </div>
 
-</div>
+    </div>
+    <nav aria-label="Page navigation" style="margin-top: 20px">
+        <ul class="pagination justify-content-center">
+            <c:url value="${contextPath}/booklist" var="prev">
+                <c:param name="page" value="${page-1}"/>
+            </c:url>
+            <c:choose>
+                <c:when test="${page > 1}">
+                    <li class="page-item">
+                        <a class="page-link" href="<c:out value="${prev}"/>" tabindex="-1"><spring:message
+                                code="pagination.prev"/></a>
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <li class="page-item disabled">
+                        <span class="page-link"><spring:message code="pagination.prev"/> </span>
+                    </li>
+                </c:otherwise>
+            </c:choose>
+            <c:forEach begin="1" end="${maxPages}" step="1" varStatus="i">
+                <c:choose>
+                    <c:when test="${page == i.index}">
+                        <li class="page-item active">
+                            <span class="page-link">
+                                ${i.index}
+                                <span class="sr-only">(current)</span>
+                            </span>
+                        </li>
+                    </c:when>
+                    <c:otherwise>
+                        <c:url value="${contextPath}/booklist" var="url">
+                            <c:param name="page" value="${i.index}"/>
+                        </c:url>
+                        <li class="page-item"><a class="page-link" href='<c:out value="${url}" />'>${i.index}</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+            <c:url value="${contextPath}/booklist" var="next">
+                <c:param name="page" value="${page+1}"/>
+            </c:url>
+            <c:choose>
+                <c:when test="${page + 1 <= maxPages}">
+                    <li class="page-item">
+                        <a class="page-link" href="<c:out value="${next}"/>"><spring:message
+                                code="pagination.next"/></a>
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <li class="page-item disabled">
+                        <span class="page-link"><spring:message code="pagination.next"/></span>
+                    </li>
+                </c:otherwise>
+            </c:choose>
+        </ul>
+    </nav>
+</div
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 </html>

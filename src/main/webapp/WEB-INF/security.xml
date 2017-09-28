@@ -39,7 +39,7 @@
         </authentication-provider>
     </authentication-manager>
 
-    <beans:bean id="userDetailsServiceImpl" class="ua.training.bookshop.service.UserDetailsServiceImpl"/>
+    <beans:bean id="userDetailsServiceImpl" class="ua.training.bookshop.service.impl.UserDetailsServiceImpl"/>
 
     <beans:bean id="encoder"
                 class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">

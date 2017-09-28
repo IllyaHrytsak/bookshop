@@ -6,13 +6,8 @@
 
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>Deposit money</title>
+    <title><spring:message code="deposit_money.title"/></title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/bootstrap.css" rel="stylesheet">
@@ -20,31 +15,43 @@
 <body>
 <jsp:include page="_header.jsp"/>
 <div class="container">
-    <h3 style="margin-top: 10px">Deposit money</h3>
+    <h3 style="margin-top: 10px"><spring:message code="deposit_money.title"/></h3>
     <form action="<c:url value="${contextPath}/home/deposit_money"/> " method="POST">
-        <c:if test="${error != null}">
+        <c:if test="${wrongCardNumber != null}">
             <div class="alert alert-danger" role="alert">
-                <strong>Oh snap!</strong> ${error}
+                <spring:message code="deposit_money.error.card_number"/>
+            </div>
+        </c:if>
+        <c:if test="${wrongCVV != null}">
+            <div class="alert alert-danger" role="alert">
+                <spring:message code="deposit_money.error.cvv"/>
+            </div>
+        </c:if>
+        <c:if test="${wrongAmount != null}">
+            <div class="alert alert-danger" role="alert">
+                <spring:message code="deposit_money.error.amount"/>
             </div>
         </c:if>
         <div class="form-group">
-            <label for="inputCardNumber">Input card number</label>
+            <label for="inputCardNumber"><spring:message code="deposit_money.label.card_number"/> </label>
             <input type="text" name="cardNumber" class="form-control" id="inputCardNumber"
-                   placeholder="1111 1111 1111 1111" autofocus="autofocus">
+                   placeholder="<spring:message code="deposit_money.placeholder.car_number"/> " autofocus="autofocus">
         </div>
         <div class="form-group">
-            <label for="inputCVV">Input CVV</label>
+            <label for="inputCVV"><spring:message code="deposit_money.label.cvv"/> </label>
             <input type="password" name="CVV" class="form-control"
                    id="inputCVV" placeholder="***">
         </div>
         <div class="form-group">
-            <label for="inputMoneyAmount">Input amount of your deposit</label>
+            <label for="inputMoneyAmount"><spring:message code="deposit_money.label.deposit_amount"/> </label>
             <input type="password" name="money" class="form-control"
-                   id="inputMoneyAmount" placeholder="1$ - 10000$">
+                   id="inputMoneyAmount"
+                   placeholder="<spring:message code="deposit_money.placeholder.deposit_amount"/> ">
         </div>
-        <button type="submit" class="btn btn-success">Deposit money</button>
-        <a href="${contextPath}/home" role="button" class="btn btn-info">Back</a>
-        <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
+        <button type="submit" class="btn btn-success"><spring:message code="deposit_money.button.accept"/></button>
+        <a href="${contextPath}/home" role="button" class="btn btn-info"><spring:message
+                code="deposit_money.button.back"/> </a>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form>
 </div>
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>

@@ -9,13 +9,8 @@
 <html>
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>Success</title>
+    <title><spring:message code="success.title"/></title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/bootstrap.css" rel="stylesheet">
@@ -26,8 +21,8 @@
 <div class="container">
 
     <div class="text-center" style="margin-top: 30px">
-        <h3>Success! Your orders are paid.</h3>
-        <a href="${contextPath}/home" class="h4 link">Go home</a>
+        <h3><spring:message code="success.info"/></h3>
+        <a href="${contextPath}/home" class="h4 link"><spring:message code="success.go_home"/> </a>
     </div>
 
 </div>

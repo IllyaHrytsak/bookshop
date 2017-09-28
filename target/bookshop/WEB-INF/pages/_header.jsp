@@ -55,6 +55,10 @@
 
 
                 <form class="form-inline" style="margin-top: 15px">
+                    <a href="?lang=en">EN</a>
+                    &nbsp;|&nbsp;
+                    <a href="?lang=uk">UA</a>
+                    &nbsp;|&nbsp;
                     <c:if test="${pageContext.request.userPrincipal.name != null}">
                         <a href="${contextPath}/home">
                                 ${pageContext.request.userPrincipal.name} </a>

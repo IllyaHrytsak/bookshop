@@ -1,4 +1,4 @@
-package ua.training.bookshop.service;
+package ua.training.bookshop.service.impl;
 
 
 import com.sun.org.apache.xpath.internal.operations.Or;
@@ -11,6 +11,7 @@ import ua.training.bookshop.dao.OrdersDao;
 import ua.training.bookshop.model.Account;
 import ua.training.bookshop.model.Book;
 import ua.training.bookshop.model.Orders;
+import ua.training.bookshop.service.OrdersService;
 
 import java.util.ArrayList;
 import java.util.Date;

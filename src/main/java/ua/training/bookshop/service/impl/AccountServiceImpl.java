@@ -1,4 +1,4 @@
-package ua.training.bookshop.service;
+package ua.training.bookshop.service.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,7 @@ import ua.training.bookshop.dao.AccountDao;
 import ua.training.bookshop.dao.RoleDao;
 import ua.training.bookshop.model.Account;
 import ua.training.bookshop.model.Role;
+import ua.training.bookshop.service.AccountService;
 
 import java.util.ArrayList;
 import java.util.List;

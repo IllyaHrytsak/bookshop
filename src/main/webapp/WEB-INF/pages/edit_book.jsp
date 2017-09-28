@@ -9,13 +9,8 @@
 <html>
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>Edit book</title>
+    <title><spring:message code="edit_book.title"/> </title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/bootstrap.css" rel="stylesheet">
@@ -27,13 +22,13 @@
 
     <c:url value="${contextPath}/edit_book" var="editBook"/>
 
-    <h4 style="margin-top: 10px">Edit book</h4>
+    <h4 style="margin-top: 10px"><spring:message code="edit_book.title"/> </h4>
     <form:form action="${editBook}" commandName="book">
         <table class="table">
             <tr>
                 <td>
                     <form:label path="id">
-                        <spring:message text="ID"/>
+                        <spring:message code="edit_book.book_id"/>
                     </form:label>
                 </td>
                 <td>
@@ -44,14 +39,14 @@
             <tr>
                 <td>
                     <form:label path="bookTitle">
-                        <spring:message text="Book title"/>
+                        <spring:message code="edit_book.book_name"/>
                     </form:label>
                 </td>
                 <td>
                     <spring:bind path="bookTitle">
                         <div class="form-group">
                             <form:input path="bookTitle" cssClass="form-control"/>
-                            <form:errors path="bookTitle" cssStyle="color: red"></form:errors>
+                            <form:errors path="bookTitle" cssStyle="color: red"/>
                         </div>
                     </spring:bind>
                 </td>
@@ -59,14 +54,14 @@
             <tr>
                 <td>
                     <form:label path="bookAuthor">
-                        <spring:message text="Book author"/>
+                        <spring:message code="edit_book.book_author"/>
                     </form:label>
                 </td>
                 <td>
                     <spring:bind path="bookAuthor">
                         <div class="form-group">
                             <form:input path="bookAuthor" cssClass="form-control"/>
-                            <form:errors path="bookAuthor" cssStyle="color: red"></form:errors>
+                            <form:errors path="bookAuthor" cssStyle="color: red"/>
                         </div>
                     </spring:bind>
                 </td>
@@ -74,14 +69,14 @@
             <tr>
                 <td>
                     <form:label path="bookPrice">
-                        <spring:message text="Book price"/>
+                        <spring:message code="edit_book.book_price"/>
                     </form:label>
                 </td>
                 <td>
                     <spring:bind path="bookPrice">
                         <div class="form-group">
                             <form:input path="bookPrice" cssClass="form-control"/>
-                            <form:errors path="bookPrice" cssStyle="color: red"></form:errors>
+                            <form:errors path="bookPrice" cssStyle="color: red"/>
                         </div>
                     </spring:bind>
                 </td>
@@ -89,7 +84,7 @@
             <tr>
                 <td>
                     <input type="submit" class="btn btn-primary"
-                           value="<spring:message text="Edit book"/>"/>
+                           value="<spring:message code="edit_book.button.edit_book"/>"/>
                 </td>
                 <td>
                 </td>
@@ -98,7 +93,7 @@
     </form:form>
 
 </div>
-
+<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 </html>
 

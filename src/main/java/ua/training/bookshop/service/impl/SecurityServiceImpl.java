@@ -1,4 +1,4 @@
-package ua.training.bookshop.service;
+package ua.training.bookshop.service.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import ua.training.bookshop.service.SecurityService;
 
 @Service
 public class SecurityServiceImpl implements SecurityService {

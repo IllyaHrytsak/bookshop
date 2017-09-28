@@ -1,4 +1,4 @@
-package ua.training.bookshop.service;
+package ua.training.bookshop.service.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

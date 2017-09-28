@@ -10,13 +10,8 @@
 <html>
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>All orders</title>
+    <title><spring:message code="all_orders.title"/></title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/bootstrap.css" rel="stylesheet">
@@ -28,30 +23,30 @@
     <c:if test="${not empty accountList}">
         <c:if test="${message != null}">
             <div class="alert alert-danger" role="alert">
-                <strong>Oh snap!</strong> ${message}
+                <spring:message code="all_orders.error"/>
             </div>
         </c:if>
         <c:if test="${not empty accountDetails}">
-            <h3>Customer information</h3>
-            <p><strong>Email:</strong> ${accountDetails.email}</p>
-            <p><strong>First name:</strong> ${accountDetails.firstName}</p>
-            <p><strong>Last name:</strong> ${accountDetails.lastName}</p>
-            <h3>Order information</h3>
-            <p><strong>Total summary:</strong> ${totalSummary} $</p>
-            <p><strong>Paid:</strong> ${paid}</p>
-            <a class="btn btn-info" href="${contextPath}/all_orders">Reset</a>
+            <h3><spring:message code="all_orders.customer_information"/></h3>
+            <p><strong><spring:message code="all_orders.email"/>:</strong> ${accountDetails.email}</p>
+            <p><strong><spring:message code="all_orders.first_name"/>:</strong> ${accountDetails.firstName}</p>
+            <p><strong><spring:message code="all_orders.last_name"/>:</strong> ${accountDetails.lastName}</p>
+            <h3><spring:message code="all_orders.order_information"/></h3>
+            <p><strong><spring:message code="all_orders.total_summary"/>:</strong> ${totalSummary} $</p>
+            <p><strong><spring:message code="all_orders.paid"/>:</strong> ${paid}</p>
+            <a class="btn btn-info" href="${contextPath}/all_orders"><spring:message code="all_orders.reset"/> </a>
             <hr>
         </c:if>
         <table class="table table-bordered">
             <thead>
             <tr>
                 <th>#</th>
-                <th>Order date</th>
-                <th>Customer email</th>
-                <th>Customer phone number</th>
-                <th>Detail view</th>
-                <th>Confirm order</th>
-                <th>Block user</th>
+                <th><spring:message code="all_orders.order_date"/></th>
+                <th><spring:message code="all_orders.customer_email"/></th>
+                <th><spring:message code="all_orders.customer_phone_number"/></th>
+                <th><spring:message code="all_orders.detail_view"/></th>
+                <th><spring:message code="all_orders.confirm_order"/></th>
+                <th><spring:message code="all_orders.block_user"/></th>
             </tr>
             </thead>
             <c:forEach items="${accountList}" var="account">
@@ -65,13 +60,17 @@
                     </td>
                     <td>${account.email}</td>
                     <td>${account.phoneNumber}</td>
-                    <td><a href="${contextPath}/all_orders?accountEmail=${account.email}">Detail view</a> </td>
-                    <td><a href="${contextPath}/confirm_orders?accountEmail=${account.email}">Confirm order</a> </td>
+                    <td><a href="${contextPath}/all_orders?accountEmail=${account.email}"><spring:message
+                            code="all_orders.detail_view"/> </a></td>
+                    <td><a href="${contextPath}/confirm_orders?accountEmail=${account.email}"><spring:message
+                            code="all_orders.confirm_order"/> </a></td>
                     <c:if test="${account.role.roleId != 3}">
-                        <td><a href="${contextPath}/block_user?accountEmail=${account.email}">Block user</a></td>
+                        <td><a href="${contextPath}/block_user?accountEmail=${account.email}"><spring:message
+                                code="all_orders.block_user"/> </a></td>
                     </c:if>
                     <c:if test="${account.role.roleId == 3}">
-                        <td><a href="${contextPath}/unblock_user?accountEmail=${account.email}">Unblock user</a></td>
+                        <td><a href="${contextPath}/unblock_user?accountEmail=${account.email}"><spring:message
+                                code="all_orders.unblock_user"/> </a></td>
                     </c:if>
                 </tr>
                 </tbody>
@@ -81,7 +80,7 @@
     </c:if>
     <c:if test="${empty accountList}">
         <div class="text-center" style="margin-top: 30px">
-            <h4>There is no orders</h4>
+            <h4><spring:message code="all_orders.no_orders"/></h4>
         </div>
     </c:if>
 </div>
