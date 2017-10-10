@@ -12,15 +12,31 @@ import ua.training.bookshop.model.Book;
 
 import java.util.List;
 
+/**
+ * Base implementation of
+ * {@link ua.training.bookshop.dao.BookDao}
+ *
+ * @author Illya Hrytsak
+ */
 @Repository
 public class BookDaoImpl implements BookDao {
 
+    /**
+     * Logger for logging class
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(BookDaoImpl.class);
 
+    /**
+     * Field for injecting realization of {@link org.hibernate.SessionFactory}
+     */
     @Autowired
     private SessionFactory sessionFactory;
 
-
+    /**
+     * Implementation method from
+     * {@link ua.training.bookshop.dao.BookDao}
+     * @param book New book
+     */
     @Override
     public void addBook(Book book) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -28,6 +44,11 @@ public class BookDaoImpl implements BookDao {
         LOGGER.info("Book successfully saved. Book details: " + book);
     }
 
+    /**
+     * Implementation method from
+     * {@link ua.training.bookshop.dao.BookDao}
+     * @param book Updated book
+     */
     @Override
     public void updateBook(Book book) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -35,6 +56,11 @@ public class BookDaoImpl implements BookDao {
         LOGGER.info("Book successfully update. Book details: " + book);
     }
 
+    /**
+     * Implementation method from
+     * {@link ua.training.bookshop.dao.BookDao}
+     * @param id Book id
+     */
     @Override
     public void removeBook(Integer id) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -46,6 +72,12 @@ public class BookDaoImpl implements BookDao {
         LOGGER.info("Book successfully removed. Book details: " + book);
     }
 
+    /**
+     * Implementation method from
+     * {@link ua.training.bookshop.dao.BookDao}
+     * @param id Book id
+     * @return Found book
+     */
     @Override
     public Book getBookById(Integer id) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -55,6 +87,11 @@ public class BookDaoImpl implements BookDao {
         return book;
     }
 
+    /**
+     * Implementation method from
+     * {@link ua.training.bookshop.dao.BookDao}
+     * @return List of all books
+     */
     @Override
     @SuppressWarnings("unchecked")
     public List<Book> listBooks() {

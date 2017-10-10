@@ -10,14 +10,32 @@ import org.springframework.stereotype.Repository;
 import ua.training.bookshop.dao.RoleDao;
 import ua.training.bookshop.model.Role;
 
+/**
+ * Base implementation of
+ * {@link ua.training.bookshop.dao.RoleDao}
+ *
+ * @author Illya Hrytsak
+ */
 @Repository
 public class RoleDaoImpl implements RoleDao {
 
+    /**
+     * Logger for logging class
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(RoleDaoImpl.class);
 
+    /**
+     * Field for injecting realization of {@link org.hibernate.SessionFactory}
+     */
     @Autowired
     private SessionFactory sessionFactory;
 
+    /**
+     * Implementation method from
+     * {@link ua.training.bookshop.dao.RoleDao}
+     * @param id Role id
+     * @return Found role
+     */
     @Override
     public Role findById(Integer id) {
         Session session = sessionFactory.getCurrentSession();

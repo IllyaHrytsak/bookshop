@@ -5,6 +5,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Entity for the table in the DB.
+ * @author Illya Hrytsak
+ */
 @Entity
 @Table(name = "ORDERS")
 public class Orders implements Serializable {

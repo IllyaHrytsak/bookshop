@@ -21,27 +21,60 @@ import ua.training.bookshop.validator.RegisterValidator;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * Controller for account requests
+ * @author Illya Hrytsak
+ */
 @Controller
 public class AccountController {
 
+    /**
+     * Field for injecting realization of
+     * {@link ua.training.bookshop.service.AccountService}
+     */
     @Autowired
     private AccountService accountService;
 
+    /**
+     * Field for injecting realization of
+     * {@link ua.training.bookshop.service.SecurityService}
+     */
     @Autowired
     private SecurityService securityService;
 
+    /**
+     * Field for injecting realization of
+     * {@link ua.training.bookshop.service.OrdersService}
+     */
     @Autowired
     private OrdersService ordersService;
 
+    /**
+     * Field for injecting realization of
+     * {@link ua.training.bookshop.validator.RegisterValidator}
+     */
     @Autowired
     private RegisterValidator registerValidator;
 
+    /**
+     * Constant for phone number regex
+     */
     private static final String phoneNumberRegex = "^\\+380[\\d]{9}$";
 
+    /**
+     * Constant for card number regex
+     */
     private static final String cardNumberRegex = "^[\\d]{4}(\\s?)[\\d]{4}(\\s?)[\\d]{4}(\\s?)[\\d]{4}$";
 
+    /**
+     * Constant for CVV regex
+     */
     private static final String cvvRegex = "^[0-9]{3}$";
 
+    /**
+     * Method listens requests on 403 error
+     * @return View
+     */
     @RequestMapping(value = "/403")
     public String accessDeniedPage() {
         return "/403";
@@ -60,6 +93,11 @@ public class AccountController {
         return "login";
     }
 
+    /**
+     * Method listens GET requests on registration
+     * @param model Model
+     * @return View
+     */
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
         model.addAttribute("userForm", new Account());
@@ -67,6 +105,13 @@ public class AccountController {
         return "registration";
     }
 
+    /**
+     * Method listens POST requests on registration
+     * @param userForm Attribute for creating account
+     * @param bindingResult Binding result
+     * @param model Model
+     * @return Redirect to another view
+     */
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("userForm") Account userForm, BindingResult bindingResult, Model model) {
         registerValidator.validate(userForm, bindingResult);
@@ -82,6 +127,15 @@ public class AccountController {
         return "redirect:/home";
     }
 
+    /**
+     * Method listens requests on home page
+     * @param model
+     * @param firstName
+     * @param lastName
+     * @param phoneNumber
+     * @param cardNumber
+     * @return View
+     */
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String accountInfo(Model model, String firstName, String lastName,
                               String phoneNumber, String cardNumber) {
@@ -107,11 +161,22 @@ public class AccountController {
         return "home";
     }
 
+    /**
+     * Method listens GET requests on new_first_name page
+     * @param model
+     * @return View
+     */
     @RequestMapping(value = "/home/new_first_name", method = RequestMethod.GET)
     public String editFirstName(Model model) {
         return "new_first_name";
     }
 
+    /**
+     * Method listens POST requests on new_first_name page
+     * @param request
+     * @param model
+     * @return Redirect to another view
+     */
     @RequestMapping(value = "/home/new_first_name", method = RequestMethod.POST)
     public String editFirstName(HttpServletRequest request, Model model) {
         String newFirstName = request.getParameter("newFirstName");
@@ -132,11 +197,22 @@ public class AccountController {
         return "redirect:/home?firstName";
     }
 
+    /**
+     * Method listens GET requests on new_last_name page
+     * @param model
+     * @return View
+     */
     @RequestMapping(value = "/home/new_last_name", method = RequestMethod.GET)
     public String editLastName(Model model) {
         return "new_last_name";
     }
 
+    /**
+     * Method listens POST requests on new_last_name page
+     * @param request
+     * @param model
+     * @return Redirect to another view
+     */
     @RequestMapping(value = "/home/new_last_name", method = RequestMethod.POST)
     public String editLastName(HttpServletRequest request, Model model) {
         String newLastName = request.getParameter("newLastName");
@@ -157,11 +233,21 @@ public class AccountController {
         return "redirect:/home?lastName";
     }
 
+    /**
+     * Method listens GET requests on new_phone_number page
+     * @return View
+     */
     @RequestMapping(value = "/home/new_phone_number", method = RequestMethod.GET)
     public String editMobilePhone() {
         return "new_phone_number";
     }
 
+    /**
+     * Method listens POST requests on new_phone_number page
+     * @param request
+     * @param model
+     * @return Redirect to another view
+     */
     @RequestMapping(value = "/home/new_phone_number", method = RequestMethod.POST)
     public String editPhoneNumber(HttpServletRequest request, Model model) {
         String newPhoneNumber = request.getParameter("newPhoneNumber");
@@ -184,11 +270,21 @@ public class AccountController {
         return "redirect:/home?phoneNumber";
     }
 
+    /**
+     * Method listens GET requests on deposit_money page
+     * @return View
+     */
     @RequestMapping(value = "/home/deposit_money", method = RequestMethod.GET)
     public String depositMoney() {
         return "deposit_money";
     }
 
+    /**
+     * Method listens POST requests on deposit_money page
+     * @param request
+     * @param model
+     * @return Redirect to another page
+     */
     @RequestMapping(value = "/home/deposit_money", method = RequestMethod.POST)
     public String depositMoney(HttpServletRequest request, Model model) {
         String cardNumber = request.getParameter("cardNumber");
@@ -216,6 +312,14 @@ public class AccountController {
         return "redirect:/home?cardNumber";
     }
 
+    /**
+     * Method listens requests on shopping_cart page
+     * @param page
+     * @param model
+     * @param noMoney
+     * @param wrongAmount
+     * @return View
+     */
     @RequestMapping(value = "/shopping_cart", method = RequestMethod.GET)
     public String listOrders(@RequestParam(required = false) Integer page,
                              Model model, String noMoney, String wrongAmount) {
@@ -245,18 +349,32 @@ public class AccountController {
         return "shopping_cart";
     }
 
+    /**
+     * Method listens requests on block user
+     * @param email
+     * @return Redirect to another page
+     */
     @RequestMapping(value = "/block_user")
     public String blockUser(@RequestParam(value = "accountEmail") String email) {
         accountService.blockUser(email);
         return "redirect:/all_orders";
     }
 
+    /**
+     * Method listens requests on unblock user
+     * @param email
+     * @return Redirect to another page
+     */
     @RequestMapping(value = "/unblock_user")
     public String unblockUser(@RequestParam(value = "accountEmail") String email) {
         accountService.unblockUser(email);
         return "redirect:/all_orders";
     }
 
+    /**
+     * Method listens requests on contacts
+     * @return View
+     */
     @RequestMapping(value = "/contacts")
     public String contacts() {
         return "contacts";

@@ -13,17 +13,37 @@ import ua.training.bookshop.model.Account;
 
 import java.util.List;
 
+/**
+ * Base implementation of
+ * {@link ua.training.bookshop.dao.AccountDao}
+ *
+ * @author Illya Hrytsak
+ */
 @Repository
 public class AccountDaoImpl implements AccountDao {
 
+    /**
+     * Logger for logging class
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountDaoImpl.class);
 
+    /**
+     * Constant for taking first element from collection
+     */
     private static final int FIRST_VALUE = 0;
 
+    /**
+     * Field for injecting realization of {@link org.hibernate.SessionFactory}
+     */
     @Autowired
     private SessionFactory sessionFactory;
 
-
+    /**
+     * Implementation method from
+     * {@link ua.training.bookshop.dao.AccountDao}
+     * @param email Account email
+     * @return Found account
+     */
     @Override
     @SuppressWarnings("unchecked")
     public Account findByEmail(String email) {
@@ -39,6 +59,11 @@ public class AccountDaoImpl implements AccountDao {
         return account;
     }
 
+    /**
+     * Implementation method from
+     * {@link ua.training.bookshop.dao.AccountDao}
+     * @param account New account
+     */
     @Override
     public void save(Account account) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -46,6 +71,11 @@ public class AccountDaoImpl implements AccountDao {
         LOGGER.info("Account successfully saved. Account details: " + account);
     }
 
+    /**
+     * Implementation method from
+     * {@link ua.training.bookshop.dao.AccountDao}
+     * @param account Updated account
+     */
     @Override
     public void updateAccount(Account account) {
         Session session = sessionFactory.getCurrentSession();
@@ -53,6 +83,11 @@ public class AccountDaoImpl implements AccountDao {
         LOGGER.info("Account successfully update. Account details: " + account);
     }
 
+    /**
+     * Implementation method from
+     * {@link ua.training.bookshop.dao.AccountDao}
+     * @return List of all accounts
+     */
     @Override
     @SuppressWarnings("unchecked")
     public List<Account> listAccounts() {
@@ -68,4 +103,5 @@ public class AccountDaoImpl implements AccountDao {
 
         return accountList;
     }
+
 }

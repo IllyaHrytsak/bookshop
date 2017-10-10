@@ -9,21 +9,46 @@ import org.springframework.validation.Validator;
 import ua.training.bookshop.model.Account;
 import ua.training.bookshop.service.AccountService;
 
+/**
+ * RegisterValidator is responsible for input information for account.
+ * Base implementation of
+ * {@link org.springframework.validation.Validator}
+ *
+ * @author Illya Hrytsak
+ */
 @Component
 public class RegisterValidator implements Validator {
 
+    /**
+     * Field for injecting realization of
+     * {@link ua.training.bookshop.service.AccountService}
+     */
     @Autowired
     private AccountService accountService;
 
+    /**
+     * Constant for email regex
+     */
     private static final String emailRegex = "^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$";
 
+    /**
+     * Constant for phone number regex
+     */
     private static final String phoneNumberRegex = "^\\+380[\\d]{9}$";
 
+    /**
+     * Implementation method from
+     * {@link org.springframework.validation.Validator}
+     */
     @Override
     public boolean supports(Class<?> aClass) {
         return Account.class.equals(aClass);
     }
 
+    /**
+     * Implementation method from
+     * {@link org.springframework.validation.Validator}
+     */
     @Override
     public void validate(Object o, Errors errors) {
         Account account = (Account) o;

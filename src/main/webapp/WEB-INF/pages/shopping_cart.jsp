@@ -30,7 +30,7 @@
                 <spring:message code="shopping_cart.error.wrong_amount"/>
             </div>
         </c:if>
-        <div class="row">
+        <div class="row justify-content-around">
             <c:forEach items="${orderList}" var="order">
                 <div class="card">
                     <form action="${contextPath}/shopping_cart/amount?orderId=${order.orderId}" method="POST">

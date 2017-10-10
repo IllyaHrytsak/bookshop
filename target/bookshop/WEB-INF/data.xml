@@ -37,13 +37,13 @@
 
 
 
-    <bean id="bookDao" class="ua.training.bookshop.dao.BookDaoImpl"/>
+    <bean id="bookDao" class="ua.training.bookshop.dao.impl.BookDaoImpl"/>
 
-    <bean id="accountDao" class="ua.training.bookshop.dao.AccountDaoImpl"/>
+    <bean id="accountDao" class="ua.training.bookshop.dao.impl.AccountDaoImpl"/>
 
-    <bean id="roleDao" class="ua.training.bookshop.dao.RoleDaoImpl"/>
+    <bean id="roleDao" class="ua.training.bookshop.dao.impl.RoleDaoImpl"/>
 
-    <bean id="orderDao" class="ua.training.bookshop.dao.OrdersDaoImpl"/>
+    <bean id="orderDao" class="ua.training.bookshop.dao.impl.OrdersDaoImpl"/>
 
     <bean id="bookValidator" class="ua.training.bookshop.validator.BookValidator"/>
 

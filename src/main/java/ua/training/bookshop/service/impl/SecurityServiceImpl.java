@@ -10,26 +10,35 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import ua.training.bookshop.service.SecurityService;
 
+/**
+ * Base implementation of
+ * {@link ua.training.bookshop.service.SecurityService}
+ *
+ * @author Illya Hrytsak
+ */
 @Service
 public class SecurityServiceImpl implements SecurityService {
 
-
+    /**
+     * Field for injecting realization of
+     * {@link org.springframework.security.authentication.AuthenticationManager}
+     */
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    /**
+     * Field for injecting realization of
+     * {@link org.springframework.security.core.userdetails.UserDetailsService}
+     */
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Override
-    public String findLoggedInAccount() {
-        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
-        if (userDetails instanceof UserDetails) {
-            return ((UserDetails) userDetails).getUsername();
-        }
-
-        return null;
-    }
-
+    /**
+     * Implementation method from
+     * {@link ua.training.bookshop.service.SecurityService}
+     * @param email Email of account
+     * @param password Password of account
+     */
     @Override
     public void autoLogin(String email, String password) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);

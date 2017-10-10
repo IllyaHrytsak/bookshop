@@ -12,14 +12,31 @@ import ua.training.bookshop.model.Orders;
 
 import java.util.List;
 
+/**
+ * Base implementation of
+ * {@link ua.training.bookshop.dao.OrdersDao}
+ *
+ * @author Illya Hrytsak
+ */
 @Repository
 public class OrdersDaoImpl implements OrdersDao {
 
+    /**
+     * Logger for logging class
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(OrdersDaoImpl.class);
 
+    /**
+     * Field for injecting realization of {@link org.hibernate.SessionFactory}
+     */
     @Autowired
     private SessionFactory sessionFactory;
 
+    /**
+     * Implementation method from
+     * {@link ua.training.bookshop.dao.OrdersDao}
+     * @param order New order
+     */
     @Override
     public void addOrder(Orders order) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -27,6 +44,11 @@ public class OrdersDaoImpl implements OrdersDao {
         LOGGER.info("Order successfully added. Order details: " + order);
     }
 
+    /**
+     * Implementation method from
+     * {@link ua.training.bookshop.dao.OrdersDao}
+     * @param order Updated book
+     */
     @Override
     public void updateOrder(Orders order) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -34,18 +56,11 @@ public class OrdersDaoImpl implements OrdersDao {
         LOGGER.info("Order successfully update. Order details: " + order);
     }
 
-    @Override
-    public void removeOrder(Integer orderId) {
-        Session session = this.sessionFactory.getCurrentSession();
-        Orders order = session.load(Orders.class, orderId);
-
-        if(order != null){
-            session.delete(order);
-        }
-
-        LOGGER.info("Order successfully removed. Order details: " + order);
-    }
-
+    /**
+     * Implementation method from
+     * {@link ua.training.bookshop.dao.OrdersDao}
+     * @return List of all orders
+     */
     @Override
     @SuppressWarnings("unchecked")
     public List<Orders> listOrders() {
@@ -62,6 +77,12 @@ public class OrdersDaoImpl implements OrdersDao {
         return orderList;
     }
 
+    /**
+     * Implementation method from
+     * {@link ua.training.bookshop.dao.OrdersDao}
+     * @param orderId Order id
+     * @return Found order
+     */
     @Override
     public Orders getOrderById(Integer orderId) {
         Session session = this.sessionFactory.getCurrentSession();

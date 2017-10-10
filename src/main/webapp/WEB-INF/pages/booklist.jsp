@@ -25,7 +25,7 @@
             <spring:message code="booklist.error"/>
         </div>
     </c:if>
-    <div class="row">
+    <div class="row justify-content-around">
 
         <c:forEach items="${bookList}" var="book">
             <div class="card">
@@ -107,7 +107,7 @@
             </c:choose>
         </ul>
     </nav>
-</div
+</div>
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 </html>

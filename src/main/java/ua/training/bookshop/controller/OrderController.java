@@ -15,16 +15,31 @@ import ua.training.bookshop.service.OrdersService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Controller for order requests
+ */
 @Controller
 public class OrderController {
 
+    /**
+     * Field for injecting realization of
+     * {@link ua.training.bookshop.service.AccountService}
+     */
     @Autowired
     private AccountService accountService;
 
+    /**
+     * Field for injecting realization of
+     * {@link ua.training.bookshop.service.OrdersService}
+     */
     @Autowired
     private OrdersService ordersService;
 
-
+    /**
+     * Method listens requests for add_book_to_cart page
+     * @param code
+     * @return Redirect to another view
+     */
     @RequestMapping("/add_book_to_cart")
     public String buyBook(@RequestParam(value = "code", defaultValue = "") String code) {
         String accountEmail = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -35,6 +50,12 @@ public class OrderController {
         return "redirect:/shopping_cart";
     }
 
+    /**
+     * Method listens requests for remove_order page
+     * @param code
+     * @param order
+     * @return Redirect to another view
+     */
     @RequestMapping("/remove_order")
     public String removeOrder(@RequestParam(value = "code", defaultValue = "") String code,
                               @RequestParam(value = "order", defaultValue = "") String order) {
@@ -42,6 +63,10 @@ public class OrderController {
         return "redirect:/shopping_cart";
     }
 
+    /**
+     * Method listens requests for remove_all page
+     * @return Redirect to another view
+     */
     @RequestMapping("/remove_all")
     public String removeAll() {
         String accountEmail = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -50,6 +75,11 @@ public class OrderController {
         return "redirect:/shopping_cart";
     }
 
+    /**
+     * Method listens GET requests for pay_orders page
+     * @param model
+     * @return View
+     */
     @RequestMapping(value = "/pay_orders", method = RequestMethod.GET)
     public String payForOrders(Model model) {
         String accountEmail = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -63,6 +93,10 @@ public class OrderController {
         return "pay_orders";
     }
 
+    /**
+     * Method listens POST requests for pay_orders_page
+     * @return Redirect to another view
+     */
     @RequestMapping(value = "/pay_orders", method = RequestMethod.POST)
     public String payForOrders() {
         String accountEmail = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -71,6 +105,12 @@ public class OrderController {
         return "redirect:/success";
     }
 
+    /**
+     * Method listens requests for amount page
+     * @param request
+     * @param orderId
+     * @return Redirect to another view
+     */
     @RequestMapping(value = "/shopping_cart/amount")
     public String updateQuantity(HttpServletRequest request,
                                  @RequestParam(value = "orderId", defaultValue = "") String orderId) {
@@ -84,13 +124,22 @@ public class OrderController {
         return "redirect:/shopping_cart";
     }
 
-
-
+    /**
+     * Method listens requests for success page
+     * @return View
+     */
     @RequestMapping(value = "/success")
     public String success() {
         return "success";
     }
 
+    /**
+     * Method listens requests for all_orders page
+     * @param model
+     * @param accountEmail
+     * @param error
+     * @return View
+     */
     @RequestMapping(value = "/all_orders")
     public String allOrders(Model model,
                             @RequestParam(value = "accountEmail", defaultValue = "") String accountEmail,
@@ -108,6 +157,11 @@ public class OrderController {
         return "all_orders";
     }
 
+    /**
+     * Method listens requests for confirm_orders page
+     * @param email
+     * @return Redirect to another page
+     */
     @RequestMapping(value = "/confirm_orders")
     public String confirmOrders(@RequestParam(value = "accountEmail", defaultValue = "") String email) {
         Account account = accountService.findByEmail(email);

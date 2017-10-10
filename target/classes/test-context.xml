@@ -9,6 +9,8 @@
     http://www.springframework.org/schema/tx
     http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <context:property-placeholder location="database/database.properties"/>
+
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <bean id="transactionManager"
@@ -31,10 +33,10 @@
 
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-          p:driverClassName="com.mysql.jdbc.Driver"
-          p:url="jdbc:mysql://localhost:3306/bookshop"
-          p:username="root"
-          p:password="root" />
+          p:driverClassName="${ds.database-driver}"
+          p:url="${ds.url}"
+          p:username="${ds.username}"
+          p:password="${ds.password}" />
 
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basenames">
@@ -49,18 +51,18 @@
         <constructor-arg name="strength" value="4"/>
     </bean>
 
-    <bean id="bookDao" class="ua.training.bookshop.dao.BookDaoImpl"/>
+    <bean id="bookDao" class="ua.training.bookshop.dao.impl.BookDaoImpl"/>
 
-    <bean id="accountDao" class="ua.training.bookshop.dao.AccountDaoImpl"/>
+    <bean id="accountDao" class="ua.training.bookshop.dao.impl.AccountDaoImpl"/>
 
-    <bean id="roleDao" class="ua.training.bookshop.dao.RoleDaoImpl"/>
+    <bean id="roleDao" class="ua.training.bookshop.dao.impl.RoleDaoImpl"/>
 
-    <bean id="orderDao" class="ua.training.bookshop.dao.OrdersDaoImpl"/>
+    <bean id="orderDao" class="ua.training.bookshop.dao.impl.OrdersDaoImpl"/>
 
-    <bean id="accountService" class="ua.training.bookshop.service.AccountServiceImpl"/>
+    <bean id="accountService" class="ua.training.bookshop.service.impl.AccountServiceImpl"/>
 
-    <bean id="bookService" class="ua.training.bookshop.service.BookServiceImpl"/>
+    <bean id="bookService" class="ua.training.bookshop.service.impl.BookServiceImpl"/>
 
-    <bean id="userDetailsService" class="ua.training.bookshop.service.UserDetailsServiceImpl"/>
+    <bean id="userDetailsService" class="ua.training.bookshop.service.impl.UserDetailsServiceImpl"/>
 
 </beans>

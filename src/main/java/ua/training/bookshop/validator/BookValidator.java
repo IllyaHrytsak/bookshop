@@ -6,14 +6,28 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import ua.training.bookshop.model.Book;
 
+/**
+ * BookValidator is responsible for input information for book.
+ * Base implementation of
+ * {@link org.springframework.validation.Validator}
+ *
+ * @author Illya Hrytsak
+ */
 public class BookValidator implements Validator {
 
-
+    /**
+     * Implementation method from
+     * {@link org.springframework.validation.Validator}
+     */
     @Override
     public boolean supports(Class<?> aClass) {
         return Book.class.equals(aClass);
     }
 
+    /**
+     * Implementation method from
+     * {@link org.springframework.validation.Validator}
+     */
     @Override
     public void validate(Object o, Errors errors) {
         Book book = (Book) o;
@@ -33,4 +47,5 @@ public class BookValidator implements Validator {
             errors.rejectValue("bookPrice", "Size.bookPrice");
         }
     }
+
 }
