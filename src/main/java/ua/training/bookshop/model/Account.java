@@ -2,6 +2,8 @@ package ua.training.bookshop.model;
 
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -43,6 +45,7 @@ public class Account implements Serializable {
     private Double card;
 
     @OneToMany(mappedBy = "account", fetch = FetchType.EAGER, orphanRemoval = true)
+    @OrderBy("orderDate")
     private Set<Orders> orders;
 
     public Account() {}

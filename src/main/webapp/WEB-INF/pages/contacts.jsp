@@ -29,9 +29,9 @@
             <h2><spring:message code="contacts.info"/></h2>
             <p><strong><spring:message code="contacts.title.address"/>:</strong> <spring:message
                     code="contacts.info.address"/></p>
-            <p><strong><spring:message code="contacts.title.email"/>:</strong> illyagrytsak@gmail.com</p>
+            <p><strong><spring:message code="contacts.title.email"/>:</strong> <a href="http://illyagrytsak@gmail.com" target="_blank>illyagrytsak@gmail.com</a></p>
             <p><strong><spring:message code="contacts.title.phone_number"/>:</strong> +380935215824</p>
-            <p><strong><spring:message code="contacts.title.vk"/>:</strong> vk.com/grytsak</p>
+            <p><strong><spring:message code="contacts.title.facebook"/>:</strong> <a href="https://www.facebook.com/illya.hrytsak" target="_blank">facebook.com/illya.hrytsak</a></p>
         </div>
     </div>
 

@@ -1,8 +1,8 @@
 package ua.training.bookshop.controller;
 
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +14,7 @@ import ua.training.bookshop.service.AccountService;
 import ua.training.bookshop.service.OrdersService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Controller for order requests
@@ -34,6 +35,16 @@ public class OrderController {
      */
     @Autowired
     private OrdersService ordersService;
+
+    /**
+     * Constant for start page
+     */
+    private static final int START_PAGE = 0;
+
+    /**
+     * Constant for number of max orders on the books page
+     */
+    private static final int ORDERS_PAGE_SIZE = 5;
 
     /**
      * Method listens requests for add_book_to_cart page
@@ -143,8 +154,8 @@ public class OrderController {
     @RequestMapping(value = "/all_orders")
     public String allOrders(Model model,
                             @RequestParam(value = "accountEmail", defaultValue = "") String accountEmail,
+                            @RequestParam(required = false) Integer page,
                             String error) {
-        model.addAttribute(accountService.listAccountsWithOrders());
         if (!accountEmail.isEmpty()) {
             Account account = accountService.findByEmail(accountEmail);
             model.addAttribute("accountDetails", account);
@@ -153,6 +164,21 @@ public class OrderController {
         }
         if (error != null) {
             model.addAttribute("message", "");
+        }
+
+        List<Account> accountList = accountService.listAccountsWithOrders();
+        PagedListHolder<Account> pagedListHolder = new PagedListHolder<>(accountList);
+        pagedListHolder.setPageSize(ORDERS_PAGE_SIZE);
+        model.addAttribute("maxPages", pagedListHolder.getPageCount());
+        if(page==null || page < 1 || page > pagedListHolder.getPageCount())page=1;
+        model.addAttribute("page", page);
+        if(page < 1 || page > pagedListHolder.getPageCount()){
+            pagedListHolder.setPage(START_PAGE);
+            model.addAttribute("accountList", pagedListHolder.getPageList());
+        }
+        else if(page <= pagedListHolder.getPageCount()) {
+            pagedListHolder.setPage(page-1);
+            model.addAttribute("accountList", pagedListHolder.getPageList());
         }
         return "all_orders";
     }
